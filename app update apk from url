@@ -1,0 +1,19 @@
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
+
+// ฟังก์ชันสำหรับดาวน์โหลดและติดตั้ง APK จาก URL
+fun downloadAndInstallApk(context: Context, apkUrl: String) {
+    val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
+    val downloadUri = Uri.parse(apkUrl)
+    val request = DownloadManager.Request(downloadUri)
+    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "app.apk") // กำหนดชื่อไฟล์และตำแหน่งที่จะเก็บไฟล์ APK
+
+    val downloadId = downloadManager.enqueue(request)
+}
+
+// ใช้ตัวอย่างฟังก์ชันด้านบน
+val apkUrl = "https://example.com/app.apk" // URL ของไฟล์ APK ที่ต้องการดาวน์โหลดและติดตั้ง
+downloadAndInstallApk(applicationContext, apkUrl)
